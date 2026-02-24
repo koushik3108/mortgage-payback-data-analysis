@@ -1,8 +1,7 @@
 # 🏦 Mortgage Payback Analytics  
 ## Predicting Loan Default and Payoff Behavior Using Machine Learning  
 
-**Author:** Sai Koushik Soma  
-**Project:** Case 3 – Mortgage Payback Analytics  
+**Author:** Sai Koushik Soma    
 
 ---
 
