@@ -1,90 +1,183 @@
-# Mortgage Payback Analytics 
-Predicting Loan Default and Payoff Behavior Using Machine Learning
+# 🏦 Mortgage Payback Analytics  
+## Predicting Loan Default and Payoff Behavior Using Machine Learning  
 
-## Overview
-Mortgage lending carries two major risks:
-- **Default risk** → credit losses, higher servicing cost, liquidity stress
-- **Early payoff risk** → loss of expected interest income, cashflow forecasting uncertainty
+**Author:** Sai Koushik Soma  
+**Project:** Case 3 – Mortgage Payback Analytics  
 
-This project builds a data-driven framework to classify mortgage outcomes into:
+---
+
+## 📌 Project Overview
+
+This project builds a predictive framework to classify mortgage loans into:
+
 - **Current**
 - **Default**
 - **Payoff**
 
-It also performs **borrower segmentation** using clustering to identify groups with similar repayment behavior.
+Using borrower characteristics, loan attributes, and macroeconomic indicators, this project helps financial institutions:
 
-## Dataset
-- ~**50,000** borrowers
-- **60 time periods** (panel/long format)
-- Includes:
-  - Borrower and loan attributes (e.g., **FICO**, **LTV**, **interest rates**, balances)
-  - Macroeconomic indicators (e.g., **HPI**, **GDP growth**, **unemployment rate**)
-- Important note: the modeling dataset is created by **collapsing each borrower to their last observed record**, so the prediction aligns with the final loan outcome lenders care about (**Current / Default / Payoff**).
+- Detect high-risk borrowers early  
+- Improve credit-risk assessment  
+- Forecast prepayment behavior  
+- Strengthen mortgage portfolio stability  
 
-## Problem Statement
-Traditional credit scoring (static FICO-based rules) may miss dynamic risk drivers like:
-- rate changes
-- unemployment changes
-- house price movement
+The dataset contains **50,000 borrowers observed across 60 periods**, and modeling is performed using each borrower’s final loan outcome.
 
-This project predicts final loan behavior and explains the main drivers of each outcome.
+---
 
-## Goals
-### Business Goals
-- Identify high-risk borrowers early for proactive intervention
-- Improve payoff forecasting to stabilize revenue expectations
-- Enhance portfolio risk segmentation and decision-making
+## 🎯 Business Problem
 
-### Analytics Goals
-- Train multiclass ML models to predict **Current / Default / Payoff**
-- Handle class imbalance using **class balancing (upsampling)**
-- Evaluate models using **Accuracy, Precision, Recall, F1, ROC-AUC**
-- Segment borrowers using **K-Means clustering** for behavioral profiling
+Mortgage lenders face two major risks:
 
-## Approach
-### 1) Data Preparation
-- Data cleaning + logical consistency checks
-- Missing values handled with **KNN Imputation**
-- Feature engineering examples:
+- ❌ **Default Risk** → Financial loss and liquidity issues  
+- ❌ **Prepayment Risk** → Loss of expected interest income  
+
+Traditional static credit scoring fails to capture:
+
+- Economic fluctuations  
+- Changing loan leverage  
+- Property value dynamics  
+- Borrower aging effects  
+
+This project provides a **data-driven, machine-learning approach** to predict final loan outcomes and segment borrower risk.
+
+---
+
+## 🎯 Business Goals
+
+✔ Improve default detection  
+✔ Enhance prepayment forecasting  
+✔ Reduce credit losses  
+✔ Strengthen underwriting fairness  
+✔ Enable borrower segmentation for targeted strategies  
+
+---
+
+## 📊 Dataset Summary
+
+- **50,000 borrowers**
+- 60 time periods
+- Panel structure collapsed to final borrower snapshot
+
+### Key Predictors
+
+**Borrower & Loan Features**
+- FICO_orig_time
+- LTV_time
+- interest_rate_time
+- loan_age (engineered)
+- rate_delta (engineered)
+
+**Macroeconomic Indicators**
+- hpi_time
+- gdp_time
+- uer_time
+
+**Property & Structural Variables**
+- REtype indicators
+- investor_orig_time
+
+**Target Variable**
+- `status_lbl`
+  - 0 = Current  
+  - 1 = Default  
+  - 2 = Payoff  
+
+---
+
+## ⚙️ Data Preprocessing
+
+✔ Logical validation of financial variables  
+✔ Range checks for LTV, FICO, interest rates  
+✔ Outlier detection  
+✔ KNN imputation (Gower distance)  
+✔ Feature engineering:
   - `loan_age`
-  - `rate_delta` (current rate vs origination rate)
+  - `rate_delta`
   - `hpi_change`
 
-### 2) Feature Diagnostics
-- Multicollinearity check using **VIF**
-- Redundant/high-collinearity features removed (e.g., overlapping balance fields, origination vs time-based duplicates)
+✔ 70/30 Stratified Train-Test Split  
+✔ Training set balanced via upsampling  
+✔ 5-fold CV used in LASSO  
 
-### 3) Train/Test Strategy
-- **70/30 stratified split**
-- Training set balanced via **upsampling** to reduce bias toward the majority class (Current)
+---
 
-### 4) Models
-Supervised multiclass classification:
-- Multinomial Logistic Regression (baseline + interpretability)
-- LASSO Multinomial Logistic Regression (feature selection via CV)
-- Random Forest (nonlinear patterns + importance)
-- XGBoost (high accuracy + strong ranking power)
+## 🤖 Models Implemented
 
-Unsupervised segmentation:
-- K-Means clustering to identify borrower groups with distinct risk behavior
+- Multinomial Logistic Regression  
+- LASSO Regularized Logistic Regression  
+- Random Forest  
+- XGBoost  
+- K-Means Clustering (Unsupervised)
 
-## Results Summary (Test Set)
-| Model | Accuracy | Default Recall | AUC (Default vs Non-Default) |
-|------|----------|----------------|------------------------------|
-| Multinomial Logistic Regression | ~0.7795 | ~0.7198 | ~0.862 |
-| LASSO | ~0.7790 | ~0.7191 | ~0.862 |
-| Random Forest | ~0.8183 | ~0.7061 | ~0.888 |
-| XGBoost | ~0.8162 | **~0.7681** | **~0.894** |
+---
 
-**Key takeaway:** XGBoost delivered the best overall balance for default detection and risk ranking, while logistic models remain useful for explainability.
+## 📈 Model Performance (Test Set)
 
-## Clustering Insights (K-Means)
-Three borrower segments were identified with distinct profiles:
-- **Payoff-prone group**: lower LTV + favorable HPI change → high payoff propensity
-- **High-risk group**: very high LTV + negative HPI change + higher unemployment → high default rates
-- **Stable/current group**: higher FICO + seasoned loans + stable macro → mostly current
+| Model | Accuracy | Default Recall | AUC (Default vs Rest) |
+|--------|----------|---------------|-----------------------|
+| Logistic Regression | 0.779 | 0.719 | 0.862 |
+| LASSO | 0.779 | 0.719 | 0.862 |
+| Random Forest | 0.818 | 0.706 | 0.888 |
+| **XGBoost** | **0.816** | **0.768** | **0.894** |
 
-This segmentation complements supervised models by explaining *why* groups behave differently.
+### 🏆 Final Model Selected: XGBoost
 
-## Repository Structure (Suggested)
-You can organize your repo like this:
+- Highest Default Recall
+- Highest AUC
+- Strongest risk ranking power
+- Economically coherent predictions
+
+---
+
+## 🔍 Key Risk Drivers Identified
+
+Across models and clustering:
+
+- 📉 High LTV → Higher default probability  
+- 📉 Rising unemployment → Increased risk  
+- 📈 Positive HPI growth → Higher payoff likelihood  
+- 📈 High FICO → Stronger loan stability  
+- 🔁 Rate differentials → Refinancing behavior  
+
+---
+
+## 🧩 Borrower Segmentation (K-Means)
+
+Three distinct borrower clusters:
+
+| Cluster | Profile | Behavior |
+|----------|---------|----------|
+| Cluster 1 | Low LTV, Positive HPI | High Payoff |
+| Cluster 2 | High LTV, Weak Economy | High Default |
+| Cluster 3 | High FICO, Seasoned Loans | Mostly Current |
+
+Segmentation aligns strongly with supervised model outputs.
+
+---
+
+## 📦 Requirements
+
+### R Version
+R ≥ 4.0 recommended
+
+### Required Packages
+
+```r
+# Loading libraries
+library(tidyverse)
+library(skimr)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(purrr)
+library(VIM)
+library(mice)
+library(scales)
+library(caret)
+library(nnet)
+library(pROC)
+library(xgboost)
+library(randomForest)
+library(glmnet)
+library(forcats)
