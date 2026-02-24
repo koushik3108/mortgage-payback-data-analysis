@@ -1,0 +1,4 @@
+## How to Run
+Install packages (example):
+```r
+install.packages(c("tidyverse","skimr", "ggplot2", "dplyr", "tidyr", "caret","purrr","VIM","mice","scales", "nnet", "randomForest","xgboost","glmnet", "pROC","forcats"))
