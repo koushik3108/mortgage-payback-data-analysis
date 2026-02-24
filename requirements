@@ -1,0 +1,19 @@
+# Install required packages
+install.packages(c(
+  "tidyverse",
+  "skimr",
+  "ggplot2",
+  "dplyr",
+  "tidyr",
+  "purrr",
+  "VIM",
+  "mice",
+  "scales",
+  "caret",
+  "nnet",
+  "pROC",
+  "xgboost",
+  "randomForest",
+  "glmnet",
+  "forcats"
+))
