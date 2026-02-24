@@ -155,28 +155,50 @@ Segmentation aligns strongly with supervised model outputs.
 
 ---
 
-## 📦 Requirements
+## 📊 Evaluation Metrics Used
 
-### R Version
-R ≥ 4.0 recommended
+Accuracy
 
-### Required Packages
+Precision
 
-```r
-# Loading libraries
-library(tidyverse)
-library(skimr)
-library(ggplot2)
-library(dplyr)
-library(tidyr)
-library(purrr)
-library(VIM)
-library(mice)
-library(scales)
-library(caret)
-library(nnet)
-library(pROC)
-library(xgboost)
-library(randomForest)
-library(glmnet)
-library(forcats)
+Recall (Default priority)
+
+F1 Score
+
+ROC-AUC
+
+Default recall was prioritized due to its financial impact.
+
+## 🚀 Business Impact
+
+This framework enables lenders to:
+
+Identify high-risk borrowers early
+
+Improve capital allocation
+
+Forecast prepayments more accurately
+
+Segment portfolios by behavioral risk
+
+Support regulatory transparency
+
+## 🏁 Conclusion
+
+This project demonstrates how:
+
+Structured data preprocessing
+
+Feature engineering
+
+Class balancing
+
+Ensemble machine learning
+
+Borrower segmentation
+
+can transform raw mortgage panel data into a robust, actionable credit-risk system.
+
+XGBoost delivers the strongest predictive performance, while Logistic Regression provides regulatory transparency. Together, they create a balanced, business-ready solution for mortgage risk management.
+
+⭐ If you found this project valuable, feel free to star the repository.
