@@ -17,7 +17,7 @@ library(glmnet)
 library(forcats)
 
 # Read dataset
-mortgage <- read_csv('/Users/koushiksoma/Desktop/Analytics Practicum/Case 3/Mortgage.csv')
+mortgage <- read_csv('Mortgage.csv')
 
 # Basic inspection
 glimpse(mortgage)
